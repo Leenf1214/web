@@ -6,14 +6,11 @@
     <title>李宁锋个人简历</title>
     <!-- 设置视口 -->
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0"> -->
+
     <link rel="stylesheet" href="./swiper/swiper.min.css" />
     <link rel="stylesheet" href="./swiper/animate.min.css" />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-        
         html,
         body {
             width: 100%;
@@ -65,9 +62,36 @@
         
         p {
             color: blueviolet;
-            margin-top: 60px;
             font-size: 16px;
-            padding-left: 10px;
+        }
+        
+        .control {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 998;
+            width: 20px;
+            height: 20px;
+        }
+        
+        .autoRotate {
+            animation-name: autoRotate;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+        /* 动画的播放状态 */
+        
+        .stop {
+            animation-play-state: paused;
+        }
+        /* 定义动画 */
+        
+        @keyframes autoRotate {
+            from {}
+            to {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
@@ -121,7 +145,11 @@
                 <p class="ani p llw" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" swiper-animate-delay="1s">出装思路：比较传统的出装，当然也是十分的暴力和实用。无尽战刃和末世是不能少的，后羿主要靠平A输出伤害，末世提供一定的攻速，无尽提供暴击</p>
             </div>
         </div>
+        <!-- music -->
+        <audio autoplay src="./music/01.mp3"></audio>
+        <img class='control autoRotate' src="./img/m1.png" alt="">
     </div>
+
 </body>
 
 </html>
@@ -130,6 +158,7 @@
 <script src="./swiper/swiper.animate1.0.2.min.js"></script>
 
 <script>
+    // 初始化swiper
     var mySwiper = new Swiper('.swiper-container', {
         // 方向
         direction: 'vertical',
@@ -141,4 +170,22 @@
             swiperAnimate(swiper); //每个slide切换结束时也运行当前slide动画
         }
     })
+
+    // 点击暂停 继续播放
+    document.querySelector('.control').onclick = function() {
+        // 获取audio
+        var audio = document.querySelector('audio');
+        console.log(audio.paused);
+        // 如果 暂停中 播放
+        if (audio.paused == true) {
+            audio.play();
+            // 添加动画类
+            this.classList.remove('stop');
+        } else {
+            // 如果是播放中 暂停
+            audio.pause();
+            // 移除动画类
+            this.classList.add('stop');
+        }
+    }
 </script>
